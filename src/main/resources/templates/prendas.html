@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>URBANA - Catálogo</title>
+	<link rel="stylesheet" th:href="@{/styles/ropa.css}">
+</head>
+<body>
+	<div th:replace="~{includes/plantilla.html::aviso}"></div>
+	<header th:replace="~{includes/plantilla.html::cabecera}"></header>
+	<nav th:replace="~{includes/plantilla.html::menu}"></nav>
+
+	<main>
+		<section class="titulo">
+			<h1 th:text="${nombreGenero}">MUJER</h1>
+			<span class="contador" th:text="'(' + ${#arrays.length(prendas)} + ')'">(0)</span>
+		</section>
+
+		<article th:if="${f_mensaje}" id="cajaMensajes"><p th:text="${f_mensaje}"></p></article>
+
+		<!-- FILTRO: el genero va oculto, lo marca el boton del menu -->
+		<form id="frmFiltros" class="filtros" th:action="@{/prendas}" method="get">
+			<input type="hidden" name="genero" th:value="${generoActual}">
+
+			<div class="campo">
+				<label for="texto">Buscar</label>
+				<input type="text" id="texto" name="texto" th:value="${fTexto}" placeholder="Nombre o descripción">
+			</div>
+
+			<div class="campo">
+				<label for="categoria">Categoría</label>
+				<select id="categoria" name="categoria">
+					<option value="">Todas</option>
+					<option th:each="c : ${categorias}" th:value="${c.id}" th:text="${c.nombre}"
+						th:selected="${fCategoria != null and fCategoria == c.id}"></option>
+				</select>
+			</div>
+
+			<div class="campo">
+				<label for="talla">Talla</label>
+				<select id="talla" name="talla">
+					<option value="">Todas</option>
+					<option th:each="t : ${tallas}" th:value="${t.id}" th:text="${t.nombre}"
+						th:selected="${fTalla != null and fTalla == t.id}"></option>
+				</select>
+			</div>
+
+			<div class="campo precio">
+				<label>Precio (€)</label>
+				<div class="rango">
+					<input type="number" name="precioMin" min="0" step="0.01" placeholder="Mín" th:value="${fPrecioMin}">
+					<span>–</span>
+					<input type="number" name="precioMax" min="0" step="0.01" placeholder="Máx" th:value="${fPrecioMax}">
+				</div>
+			</div>
+
+			<div class="botonesFiltro">
+				<button type="submit" class="btnNegro">FILTRAR <span>&rarr;</span></button>
+				<a class="btnLimpiar" th:href="@{/prendas(genero=${generoActual})}">Limpiar</a>
+			</div>
+		</form>
+
+		<!-- ORDENACION, justo antes de las prendas (usa el formulario de arriba con form=) -->
+		<section class="barraOrden">
+			<p th:text="${#arrays.length(prendas)} + ' productos'">0 productos</p>
+			<div class="ordenar">
+				<label for="orden">Ordenar por</label>
+				<select id="orden" name="orden" form="frmFiltros" data-autoenviar>
+					<option value="popularidad" th:selected="${orden == 'popularidad'}">Popularidad</option>
+					<option value="creacion" th:selected="${orden == 'creacion'}">Novedades</option>
+					<option value="precio_asc" th:selected="${orden == 'precio_asc'}">Precio: de menor a mayor</option>
+					<option value="precio_desc" th:selected="${orden == 'precio_desc'}">Precio: de mayor a menor</option>
+				</select>
+			</div>
+		</section>
+
+		<p class="vacio" th:if="${#arrays.isEmpty(prendas)}">No hay prendas con esos filtros.</p>
+
+		
+		<section class="rejilla">
+			<article class="prenda" th:each="p : ${prendas}">
+				<div class="prendaFoto">
+					<img class="prendaImg"
+						th:src="${#lists.isEmpty(p.fotos)} ? @{/img/sin-foto.svg} : ${urlFotos + p.fotos[0].nombre}"
+						th:alt="${p.nombre}" onerror="this.onerror=null;this.src='/img/sin-foto.svg'">
+					<span class="etiqueta agotado" th:if="${p.stockTotal() == 0}">AGOTADO</span>
+				</div>
+
+				
+				<div class="miniaturas" th:if="${#lists.size(p.fotos) > 1}">
+					<button type="button" class="miniatura" th:each="f, it : ${p.fotos}"
+						th:classappend="${it.first} ? 'activa'" th:data-src="${urlFotos + f.nombre}"
+						th:aria-label="'Foto ' + ${it.count}">
+						<img th:src="${urlFotos + f.nombre}" alt="" onerror="this.style.visibility='hidden'">
+					</button>
+				</div>
+
+				<div class="prendaInfo">
+					<p class="precio" th:text="${#numbers.formatDecimal(p.precio, 1, 'POINT', 2, 'COMMA')} + ' €'">0,00 €</p>
+					<h3 th:text="${p.nombre}">Nombre</h3>
+					<p class="categoria"><span th:text="${p.categoriaId.nombre}"></span> &middot; <span th:text="${p.generoId.nombre}"></span></p>
+					<p class="descripcion" th:text="${p.descripcion}"></p>
+
+					
+					<div class="tallas">
+						<span class="talla" th:each="s : ${p.stock}"
+							th:classappend="${s.cantidad == null or s.cantidad <= 0} ? 'agotada'"
+							th:text="${s.tallaId.nombre}"
+							th:title="${s.cantidad == null ? 0 : s.cantidad} + ' uds.'">M</span>
+					</div>
+				</div>
+			</article>
+		</section>
+	</main>
+
+	<footer th:replace="~{includes/plantilla.html::pie}"></footer>
+	<script th:src="@{/js/prendas.js}"></script>
+</body>
+</html>

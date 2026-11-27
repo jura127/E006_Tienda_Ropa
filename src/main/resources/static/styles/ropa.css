@@ -1,0 +1,484 @@
+/* ============================================================
+   URBANA - catalogo de ropa (estilo tienda deportiva: negro/blanco)
+   ============================================================ */
+:root {
+	--negro: #000;
+	--blanco: #fff;
+	--gris: #eceff1;
+	--gris2: #767677;
+	--borde: #d4d4d4;
+	--rojo: #d6001c;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: var(--negro);
+	background: var(--blanco);
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+/* ---------- AVISO + CABECERA ---------- */
+.aviso {
+	background: var(--negro);
+	color: var(--blanco);
+	text-align: center;
+	font-size: .72rem;
+	font-weight: 700;
+	letter-spacing: .08em;
+	padding: 9px 12px;
+}
+
+header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 14px 32px;
+	border-bottom: 1px solid var(--borde);
+}
+
+.logo {
+	font-size: 2rem;
+	font-weight: 900;
+	font-style: italic;
+	letter-spacing: -1px;
+}
+
+.logo span {
+	font-size: .9rem;
+	margin-left: 4px;
+	vertical-align: super;
+}
+
+#cabecera_der {
+	display: flex;
+	gap: 24px;
+}
+
+.cabLink {
+	font-size: .8rem;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.cabLink:hover {
+	text-decoration: underline;
+}
+
+/* ---------- MENU DE GENEROS ---------- */
+.menuGeneros {
+	border-bottom: 1px solid var(--borde);
+	padding: 0 32px;
+	overflow-x: auto;
+}
+
+.menuGeneros ul {
+	display: flex;
+	gap: 8px;
+	list-style: none;
+}
+
+.menuGeneros a {
+	display: block;
+	padding: 16px 18px 13px;
+	font-weight: 800;
+	font-size: .9rem;
+	text-transform: uppercase;
+	letter-spacing: .04em;
+	border-bottom: 3px solid transparent;
+}
+
+.menuGeneros a:hover {
+	border-bottom-color: var(--negro);
+}
+
+.menuGeneros a.activo {
+	border-bottom-color: var(--negro);
+}
+
+/* ---------- CONTENIDO ---------- */
+main {
+	flex: 1;
+	width: 100%;
+	max-width: 1400px;
+	margin: 0 auto;
+	padding: 28px 32px 56px;
+}
+
+.titulo {
+	display: flex;
+	align-items: baseline;
+	gap: 12px;
+	margin-bottom: 22px;
+}
+
+.titulo h1 {
+	font-size: 2.6rem;
+	font-weight: 900;
+	text-transform: uppercase;
+	font-style: italic;
+	letter-spacing: -1px;
+}
+
+.contador {
+	color: var(--gris2);
+	font-size: 1rem;
+	font-weight: 600;
+}
+
+#cajaMensajes {
+	border-left: 4px solid var(--rojo);
+	background: #fdeaed;
+	padding: 12px 16px;
+	margin-bottom: 18px;
+	font-weight: 600;
+}
+
+/* ---------- FILTROS ---------- */
+.filtros {
+	display: grid;
+	grid-template-columns: 2fr 1fr 1fr 1.4fr auto;
+	gap: 16px;
+	align-items: end;
+	padding: 20px;
+	background: var(--gris);
+}
+
+.campo label {
+	display: block;
+	font-size: .68rem;
+	font-weight: 800;
+	text-transform: uppercase;
+	letter-spacing: .08em;
+	margin-bottom: 6px;
+}
+
+.campo input,
+.campo select,
+.ordenar select {
+	width: 100%;
+	height: 46px;
+	padding: 0 12px;
+	font: inherit;
+	font-size: .9rem;
+	background: var(--blanco);
+	border: 1px solid var(--negro);
+	border-radius: 0;
+}
+
+.campo input:focus,
+.campo select:focus,
+.ordenar select:focus {
+	outline: 3px solid #0070e0;
+	outline-offset: 1px;
+}
+
+.rango {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.botonesFiltro {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+
+.btnNegro {
+	height: 46px;
+	padding: 0 22px;
+	background: var(--negro);
+	color: var(--blanco);
+	font: inherit;
+	font-size: .8rem;
+	font-weight: 800;
+	letter-spacing: .08em;
+	border: 0;
+	cursor: pointer;
+	white-space: nowrap;
+}
+
+.btnNegro span {
+	display: inline-block;
+	margin-left: 6px;
+	transition: transform .15s;
+}
+
+.btnNegro:hover span {
+	transform: translateX(5px);
+}
+
+.btnLimpiar {
+	font-size: .8rem;
+	font-weight: 700;
+	text-decoration: underline;
+	white-space: nowrap;
+}
+
+/* ---------- BARRA DE ORDEN ---------- */
+.barraOrden {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 26px 0 18px;
+	padding-bottom: 14px;
+	border-bottom: 1px solid var(--borde);
+}
+
+.barraOrden>p {
+	font-size: .85rem;
+	color: var(--gris2);
+	font-weight: 600;
+}
+
+.ordenar {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.ordenar label {
+	font-size: .75rem;
+	font-weight: 800;
+	text-transform: uppercase;
+	letter-spacing: .08em;
+}
+
+.ordenar select {
+	width: auto;
+	min-width: 230px;
+}
+
+.vacio {
+	padding: 60px 0;
+	text-align: center;
+	font-weight: 700;
+	color: var(--gris2);
+}
+
+/* ---------- REJILLA DE PRENDAS ---------- */
+.rejilla {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 32px 20px;
+}
+
+.prenda {
+	display: flex;
+	flex-direction: column;
+}
+
+.prendaFoto {
+	position: relative;
+	aspect-ratio: 1 / 1;
+	background: var(--gris);
+	overflow: hidden;
+}
+
+.prendaFoto img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform .35s;
+}
+
+.prenda:hover .prendaFoto img {
+	transform: scale(1.04);
+}
+
+.etiqueta {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	padding: 4px 8px;
+	font-size: .65rem;
+	font-weight: 800;
+	letter-spacing: .08em;
+	background: var(--blanco);
+}
+
+.etiqueta.agotado {
+	background: var(--negro);
+	color: var(--blanco);
+}
+
+.miniaturas {
+	display: flex;
+	gap: 6px;
+	margin-top: 8px;
+}
+
+.miniatura {
+	width: 44px;
+	height: 44px;
+	padding: 0;
+	background: var(--gris);
+	border: 0;
+	border-bottom: 3px solid transparent;
+	cursor: pointer;
+}
+
+.miniatura img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.miniatura:hover,
+.miniatura.activa {
+	border-bottom-color: var(--negro);
+}
+
+.prendaInfo {
+	padding-top: 12px;
+}
+
+.prendaInfo .precio {
+	font-weight: 800;
+	font-size: 1rem;
+}
+
+.prendaInfo h3 {
+	font-size: .95rem;
+	font-weight: 500;
+	margin: 4px 0 2px;
+}
+
+.prendaInfo .categoria {
+	font-size: .8rem;
+	color: var(--gris2);
+	text-transform: capitalize;
+}
+
+.prendaInfo .descripcion {
+	margin-top: 6px;
+	font-size: .8rem;
+	color: #444;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.tallas {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin-top: 10px;
+}
+
+.talla {
+	min-width: 38px;
+	padding: 6px 8px;
+	text-align: center;
+	font-size: .75rem;
+	font-weight: 700;
+	border: 1px solid var(--negro);
+}
+
+.talla.agotada {
+	color: #aaa;
+	border-color: var(--borde);
+	text-decoration: line-through;
+}
+
+/* ---------- PIE ---------- */
+footer {
+	background: var(--negro);
+	color: var(--blanco);
+	margin-top: auto;
+}
+
+.pieCols {
+	display: flex;
+	gap: 64px;
+	padding: 36px 32px;
+	max-width: 1400px;
+	margin: 0 auto;
+}
+
+.pieCols b {
+	display: block;
+	margin-bottom: 10px;
+	text-transform: uppercase;
+	letter-spacing: .06em;
+	font-size: .8rem;
+}
+
+.pieCols p {
+	font-size: .8rem;
+	color: #b5b5b5;
+	margin-bottom: 6px;
+}
+
+.pieBase {
+	border-top: 1px solid #333;
+	padding: 16px 32px;
+	font-size: .72rem;
+	color: #b5b5b5;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 1100px) {
+	.rejilla {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.filtros {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+@media (max-width: 720px) {
+	main {
+		padding: 20px 16px 40px;
+	}
+
+	header,
+	.menuGeneros {
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+
+	.rejilla {
+		grid-template-columns: repeat(2, 1fr);
+		gap: 24px 12px;
+	}
+
+	.filtros {
+		grid-template-columns: 1fr;
+	}
+
+	.barraOrden {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 10px;
+	}
+
+	.ordenar select {
+		min-width: 0;
+	}
+
+	.pieCols {
+		flex-direction: column;
+		gap: 20px;
+	}
+
+	.titulo h1 {
+		font-size: 2rem;
+	}
+}

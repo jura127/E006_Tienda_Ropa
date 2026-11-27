@@ -1,0 +1,31 @@
+<div th:fragment="aviso" class="aviso">
+	ENVÍO GRATIS A PARTIR DE 50 € &nbsp;&middot;&nbsp; DEVOLUCIONES GRATIS EN 30 DÍAS
+</div>
+
+<header th:fragment="cabecera">
+	<a class="logo" th:href="@{/}">URBANA<span>&#9650;</span></a>
+	<div id="cabecera_der">
+		<span class="cabLink">Ayuda</span>
+		<span class="cabLink">Cuenta</span>
+		<span class="cabLink">Cesta (0)</span>
+	</div>
+</header>
+
+<!-- botones generados con los generos de la BD (si anaden "Infantil" sale solo) -->
+<nav th:fragment="menu" class="menuGeneros">
+	<ul>
+		<li th:each="g : ${generos}">
+			<a th:href="@{/prendas(genero=${g.id})}" th:text="${g.nombre}"
+				th:classappend="${g.id == generoActual} ? 'activo'">Genero</a>
+		</li>
+	</ul>
+</nav>
+
+<footer th:fragment="pie">
+	<div class="pieCols">
+		<div><b>URBANA</b><p>Moda urbana para todos.</p></div>
+		<div><b>Ayuda</b><p>Envíos</p><p>Devoluciones</p><p>Guía de tallas</p></div>
+		<div><b>Empresa</b><p>Sobre nosotros</p><p>Tiendas</p></div>
+	</div>
+	<div class="pieBase">&copy; 2026 URBANA &middot; Catálogo de ropa</div>
+</footer>
